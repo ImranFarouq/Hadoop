@@ -57,7 +57,7 @@ hadoop version
 ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar
 
 mkdir wordcountex 
-# add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
+####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
 jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i
 hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount wordcountex texts_output 
 cat texts_output/part-r-00000 | sort -k 2 -nr | head n -5
