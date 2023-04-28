@@ -1,19 +1,19 @@
 # Installations
 
-############################################
-Hadoop setup
-############################################
+
+## Hadoop setup
+
 
 Oracle Virtual Box - https://www.virtualbox.org/wiki/Downloads 
 Ubuntu Desktop LTS - https://ubuntu.com/download/desktop 
 Setup parameters - 
 
 
-# Ip address
+### Ip address
 ifconfig
 sudo apt update 
 
-# Java
+#### Java
 sudo apt install openjdk-8-jdk
 ls /usr/lib/jvm/java-8-openjdk-amd64
 nano ~/.bashrc
@@ -23,7 +23,7 @@ source .bashrc
 echo $JAVA_HOME
 java -version #1.8
 
-# Passwordless ssh
+#### Passwordless ssh
 ssh localhost
 sudo apt-get install openssh-server openssh-client
 ssh localhost
@@ -32,7 +32,7 @@ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ssh localhost
 exit
 
-# Hadoop
+#### Hadoop
 mkdir -p course/softwares
 cd course/softwares
 wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz 
@@ -45,7 +45,7 @@ Pseudo-Distributed mode: Each daemon(Namenode, Datanode etc) runs on its own JVM
 Distributed mode: Each Daemon run on its own JVM across a cluster of hosts
 '''
 
-# Stand alone mode
+#### Stand alone mode
 ls
 nano ~/.bashrc
 export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4
@@ -53,7 +53,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 source .bashrc
 hadoop version
 
-# Word count problem in standalone mode
+#### Word count problem in standalone mode
 ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar
 
 mkdir wordcountex 
@@ -62,7 +62,7 @@ jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar |
 hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount wordcountex texts_output 
 cat texts_output/part-r-00000 | sort -k 2 -nr | head n -5
 
-# Pseudo Distributed mode
+#### Pseudo Distributed mode
 nano ~/.bashrc
 
 export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4
@@ -168,16 +168,16 @@ stop-yarn.sh
 stop-dfs.sh
 
 
-# Word count problem in psuedo distributed mode
+#### Word count problem in psuedo distributed mode
 ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar
 mkdir wordcountex 
-# add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
+####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
 jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i
-# add files to hdfs 
+####### add files to hdfs 
 hdfs dfs -mkdir -p /user/input/wcexample
 hdfs dfs -put wordcountex/*.txt /user/input/wcexample
 
-# run wc from hdfs files and save into hdfs
+#### run wc from hdfs files and save into hdfs
 hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount /user/input/wcexample /user/output/ex2 
 hdfs dfs -cat /user/output/ex2/part-r-00000 | sort -k 2 -nr | head -n5
 
