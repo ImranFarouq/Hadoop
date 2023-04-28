@@ -4,180 +4,180 @@
 ## Hadoop setup
 
 
-Oracle Virtual Box - https://www.virtualbox.org/wiki/Downloads 
-Ubuntu Desktop LTS - https://ubuntu.com/download/desktop 
+Oracle Virtual Box - https://www.virtualbox.org/wiki/Downloads  <br>
+Ubuntu Desktop LTS - https://ubuntu.com/download/desktop <br>
 Setup parameters - 
-
+<br>
 
 ### Ip address
-ifconfig
-sudo apt update 
+ifconfig<br>
+sudo apt update <br>
 
 #### Java
-sudo apt install openjdk-8-jdk
-ls /usr/lib/jvm/java-8-openjdk-amd64
-nano ~/.bashrc
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$PATH:$JAVA_HOME/bin
-source .bashrc
-echo $JAVA_HOME
-java -version #1.8
+sudo apt install openjdk-8-jdk<br>
+ls /usr/lib/jvm/java-8-openjdk-amd64<br>
+nano ~/.bashrc<br>
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64<br>
+export PATH=$PATH:$JAVA_HOME/bin<br>
+source .bashrc<br>
+echo $JAVA_HOME<br>
+java -version #1.8<br>
 
 #### Passwordless ssh
-ssh localhost
-sudo apt-get install openssh-server openssh-client
-ssh localhost
-ssh-keygen -t rsa -P ""
-cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-ssh localhost
-exit
+ssh localhost<br>
+sudo apt-get install openssh-server openssh-client<br>
+ssh localhost<br>
+ssh-keygen -t rsa -P ""<br>
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys<br>
+ssh localhost<br>
+exit<br>
 
-#### Hadoop
-mkdir -p course/softwares
-cd course/softwares
-wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz 
-mv hadoop-3.3.4.tar.gz course/softwares
-tar -xzvf hadoop-3.3.4.tar.gz
+#### Hadoop<br>
+mkdir -p course/softwares<br>
+cd course/softwares<br>
+wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz <br>
+mv hadoop-3.3.4.tar.gz course/softwares<br>
+tar -xzvf hadoop-3.3.4.tar.gz<br>
 
 '''
-Local (or Standalone) mode: There are no daemons and everything runs on a single JVM.
-Pseudo-Distributed mode: Each daemon(Namenode, Datanode etc) runs on its own JVM on a single host.
-Distributed mode: Each Daemon run on its own JVM across a cluster of hosts
+Local (or Standalone) mode: There are no daemons and everything runs on a single JVM.<br>
+Pseudo-Distributed mode: Each daemon(Namenode, Datanode etc) runs on its own JVM on a single host.<br>
+Distributed mode: Each Daemon run on its own JVM across a cluster of hosts<br>
 '''
 
 #### Stand alone mode
-ls
-nano ~/.bashrc
-export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4
-export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-source .bashrc
-hadoop version
+ls<br>
+nano ~/.bashrc<br>
+export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4<br>
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin<br>
+source .bashrc<br>
+hadoop version<br>
 
-#### Word count problem in standalone mode
-ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar
+#### Word count problem in standalone mode<br>
+ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar<br>
 
-mkdir wordcountex 
-####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
-jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i
-hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount wordcountex texts_output 
-cat texts_output/part-r-00000 | sort -k 2 -nr | head n -5
+mkdir wordcountex <br>
+####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex<br>
+jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i<br>
+hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount wordcountex texts_output <br>
+cat texts_output/part-r-00000 | sort -k 2 -nr | head n -5<br>
 
-#### Pseudo Distributed mode
-nano ~/.bashrc
+#### Pseudo Distributed mode<br>
+nano ~/.bashrc<br>
 
-export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4
-export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-export HADOOP_HDFS_HOME=$HADOOP_HOME
-export HADOOP_MAPRED_HOME=$HADOOP_HOME
-export HADOOP_COMMON_HOME=$HADOOP_HOME
-export HADOOP_YARN_HOME=$HADOOP_HOME
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-export HADOOP_INSTALL=$HADOOP_HOME
-export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"
-export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"
-export HADOOP_SECURITY_CONF_DIR
+export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4<br>
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin<br>
+export HADOOP_HDFS_HOME=$HADOOP_HOME<br>
+export HADOOP_MAPRED_HOME=$HADOOP_HOME<br>
+export HADOOP_COMMON_HOME=$HADOOP_HOME<br>
+export HADOOP_YARN_HOME=$HADOOP_HOME<br>
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native<br>
+export HADOOP_INSTALL=$HADOOP_HOME<br>
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib"<br>
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_COMMON_LIB_NATIVE_DIR"<br>
+export HADOOP_SECURITY_CONF_DIR<br>
 
-source ~/.bashrc
+source ~/.bashrc<br>
 
-hadoop version
-cd $HADOOP_HOME/etc/hadoop
+hadoop version<br>
+cd $HADOOP_HOME/etc/hadoop<br>
 
-nano hadoop-env.sh 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+nano hadoop-env.sh <br>
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64<br>
 
-nano core-site.xml
-<configuration>
+nano core-site.xml<br>
+<configuration><br>
 
-   <property> 
-      <name>fs.default.name</name> 
-      <value>hdfs://localhost:9000</value> 
-   </property>
+   <property> <br>
+      <name>fs.default.name</name> <br>
+      <value>hdfs://localhost:9000</value> <br>
+   </property><br>
    
-</configuration>
+</configuration><br>
 
-nano hdfs-site.xml
-<configuration>
+nano hdfs-site.xml<br>
+<configuration><br>
 
-   <property> 
-      <name>dfs.replication</name> 
-      <value>1</value> 
-   </property> 
-   <property> 
-      <name>dfs.name.dir</name> 
-      <value>file:///home/srividya/hadoopinfra/hdfs/namenode </value> 
-   </property> 
-   <property> 
-      <name>dfs.data.dir</name>
-      <value>file:///home/srividya/hadoopinfra/hdfs/datanode </value > 
-   </property>
+   <property> <br>
+      <name>dfs.replication</name> <br>
+      <value>1</value> <br>
+   </property> <br>
+   <property> <br>
+      <name>dfs.name.dir</name> <br>
+      <value>file:///home/srividya/hadoopinfra/hdfs/namenode </value> <br>
+   </property> <br>
+   <property> <br>
+      <name>dfs.data.dir</name><br>
+      <value>file:///home/srividya/hadoopinfra/hdfs/datanode </value > <br>
+   </property><br>
    
-</configuration>
+</configuration><br>
 
-hadoop classpath
-/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/etc/hadoop:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/common/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/common/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/mapreduce/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn/*
+hadoop classpath<br>
+/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/etc/hadoop:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/common/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/common/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/hdfs/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/mapreduce/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn/lib/*:/home/srividya/Desktop/trialrun/softwares/hadoop-3.3.4/share/hadoop/yarn/*<br>
 
-nano yarn-site.xml
-<configuration>
+nano yarn-site.xml<br>
+<configuration><br>
 
-   <property> 
-      <name>yarn.nodemanager.aux-services</name> 
-      <value>mapreduce_shuffle</value> 
-   </property>
-   <property>
-    <name>yarn.application.classpath</name>
-    <value>output from hadoop classpath</value>
- </property>
+   <property> <br>
+      <name>yarn.nodemanager.aux-services</name> <br>
+      <value>mapreduce_shuffle</value> <br>
+   </property><br>
+   <property><br>
+    <name>yarn.application.classpath</name><br>
+    <value>output from hadoop classpath</value><br>
+ </property><br>
    
-</configuration>
+</configuration><br>
 
-nano mapred-site.xml
-<configuration>
+nano mapred-site.xml<br>
+<configuration><br>
 
-   <property> 
-      <name>mapreduce.framework.name</name> 
-      <value>yarn</value> 
-   </property>
-<property>
-  <name>mapreduce.reduce.env</name>
-  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value>
-</property>
+   <property> <br>
+      <name>mapreduce.framework.name</name> <br>
+      <value>yarn</value> <br>
+   </property><br>
+<property><br>
+  <name>mapreduce.reduce.env</name><br>
+  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value><br>
+</property><br>
 
-<property>
-  <name>yarn.app.mapreduce.am.env</name>
-  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value>
-</property>
+<property><br>
+  <name>yarn.app.mapreduce.am.env</name><br>
+  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value><br>
+</property><br>
 
-<property>
-  <name>mapreduce.map.env</name>
-  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value>
-</property>
+<property><br>
+  <name>mapreduce.map.env</name><br>
+  <value>HADOOP_MAPRED_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4</value><br>
+</property><br>
 
 
-</configuration>
+</configuration><br>
 
-cd ~
-hdfs namenode -format
-start-dfs.sh
-start-yarn.sh
+cd ~<br>
+hdfs namenode -format<br>
+start-dfs.sh<br>
+start-yarn.sh<br>
 
 # Port to access Hadoop
-http://localhost:9870/
-http://localhost:8088/
+http://localhost:9870/<br>
+http://localhost:8088/<br>
 
-stop-yarn.sh
-stop-dfs.sh
+stop-yarn.sh<br>
+stop-dfs.sh<br>
 
 
-#### Word count problem in psuedo distributed mode
-ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar
-mkdir wordcountex 
-####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex
-jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i
-####### add files to hdfs 
-hdfs dfs -mkdir -p /user/input/wcexample
-hdfs dfs -put wordcountex/*.txt /user/input/wcexample
+#### Word count problem in psuedo distributed mode<br>
+ls $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar<br>
+mkdir wordcountex <br>
+####### add text files inside that folder or cp $HADOOP_HOME/*.txt wordcountex<br>
+jar tf $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar | grep wordcount -i<br>
+####### add files to hdfs <br>
+hdfs dfs -mkdir -p /user/input/wcexample<br>
+hdfs dfs -put wordcountex/*.txt /user/input/wcexample<br>
 
-#### run wc from hdfs files and save into hdfs
-hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount /user/input/wcexample /user/output/ex2 
-hdfs dfs -cat /user/output/ex2/part-r-00000 | sort -k 2 -nr | head -n5
-
+#### run wc from hdfs files and save into hdfs<br>
+hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar  wordcount /user/input/wcexample /user/output/ex2 <br>
+hdfs dfs -cat /user/output/ex2/part-r-00000 | sort -k 2 -nr | head -n5<br>
+<br>
