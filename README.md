@@ -1,40 +1,60 @@
+# Pig
 
-# Hive
 
-Check location from hdfs <br>
+Copy files to read<br>
 
-hadoop fs -ls /user/hive/warehouse<br>
+hadoop fs -copyFromLocal emp.csv pig/emp.csv <br>
 
-Managed tables<br>
+Load Data<br>
 
-create table if not exists emp(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ',’;
+ A = load '/user/root/pig/emp.csv' using PigStorage(',') as (eid:int,ename:chararray,epos:chararray,esal:int,ecom:int,edpno:int);
+ 
+Dump A;<br>
 
-describe emp;<br>
+A2 = load '/user/root/pig/emp.csv’;<br>
+describe A2;<br>
 
-load data local inpath '/home/cloudera/Desktop/emp.csv' into table emp;<br>
 
-Select * from emp;<br>
 
-External Tables<br>
 
-create external table  ext_emp1(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ',’ location '/user/cloudera/data/emp’;
+Aggregate (by row)<br>
 
-While giving path we have to give only directory path not file name<br>
+B = filter A by edpno==20;<br>
 
-Here, table will be in given hdfs path.<br>
+B2 = filter A by edpno==20 and epos=='MANAGER’,<br>
 
-create external table  ext_emp2(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ‘,’;
+C = limit B 3;<br>
 
-Table will be stored under /user/hive/warehouse/A.db/ext_emp2/emp<br>
+D = order C by esal desc;<br>
 
-load data local inpath '/home/cloudera/Desktop/empdata' into table ext_emp2;<br>
 
-set hive.exec.dynamic.partition.mode;<br>
-set hive.exec.dynamic.partition.mode=nonstrict;<br>
+Store Data<br>
 
-create external table emp_dept (empno int, ename string, sal float, comm float) partitioned by (dpno int) row format delimited fields terminated by ',’;
+store D into '/pig/pigout1’ using PigStorage(',’);<br>
 
-insert into table emp_dept partition(dpno) select * from emp;<br>
 
-Check<br>
-hadoop fs -ls /user/hive/warehouse/A.db<br>
+Transform (by column)<br>
+
+Select existing column<br>
+
+E = foreach A generate eid;<br>
+
+
+Create new column<br>
+
+F = foreach A generate *, ecom*2 as Bonus,esal*5 as Incentive;<br>
+
+
+Transform columns<br>
+
+G = foreach A generate SUBSTRING(ename,0,4);<br>
+
+Advanced codes<br>
+
+H = foreach A generate $0,$1;<br>
+I = group A by edpno;<br>
+J = foreach I generate group as edpno, COUNT($1) as count;<br>
+K = foreach A generate MAX(A.esal) as maxsal,MIN(A.esal) as minsal, SUM(A.esal) as sumsal, COUNT($1) as count;<br>
+L = group A by (edpno, epos)<br>
+
+SPLIT A into B if edpno==10, C if edpno==20, D if epos=='MANAGER';<br>
