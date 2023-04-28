@@ -20,11 +20,8 @@ describe A2;<br>
 Aggregate (by row)<br>
 
 B = filter A by edpno==20;<br>
-
 B2 = filter A by edpno==20 and epos=='MANAGER’,<br>
-
 C = limit B 3;<br>
-
 D = order C by esal desc;<br>
 
 
