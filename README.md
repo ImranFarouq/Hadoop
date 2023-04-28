@@ -183,4 +183,79 @@ hdfs dfs -cat /user/output/ex2/part-r-00000 | sort -k 2 -nr | head -n5<br>
 <br>
 
 
-# HIVE<br>cd course/softwares<br>wget https://apache.osuosl.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz<br>tar -xzf apache-hive-3.1.2-bin.tar.gz<br>mv apache-hive-3.1.2-bin hive<br><br>nano ~/.bashrc<br>export HIVE_HOME=$HOME/Desktop/trialrun/softwares/hive<br>export PATH=$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin<br>export CLASSPATH=$CLASSPATH:$HADOOP_HOME/lib/*:$HIVE_HOME/lib/*<br>source ~/.bashrc<br><br>cd $HIVE_HOME/conf<br>nano hive-env.sh<br>export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4<br><br># Metastore - Apache Derby configuration<br>cd course/softwares<br>wget http://archive.apache.org/dist/db/derby/db-derby-10.4.2.0/db-derby-10.4.2.0-bin.tar.gz<br>tar zxvf db-derby-10.4.2.0-bin.tar.gz<br>mv db-derby-10.4.2.0-bin derby<br><br>nano ~/.bashrc<br>export DERBY_HOME=$HOME/Desktop/trialrun/softwares/derby<br>export PATH=$PATH:$DERBY_HOME/bin<br>export CLASSPATH=$CLASSPATH:$DERBY_HOME/lib/derby.jar:$DERBY_HOME/lib/derbytools.jar<br>source ~/.bashrc<br><br>mkdir $DERBY_HOME/data<br><br># Configure Derby for Hive<br>cd $HIVE_HOME/conf<br>nano hive-site.xml<br><configuration><br><br>   <property><br>   	<name>javax.jdo.option.ConnectionURL</name><br>   	<value>jdbc:derby:;databaseName=metastore_db;create=true</value><br>    <description>JDBC connect string for a JDBC metastore </description><br>   </property><br>   <br></configuration><br><br>nano jpox.properties<br><br>javax.jdo.PersistenceManagerFactoryClass =<br><br>org.jpox.PersistenceManagerFactoryImpl<br>org.jpox.autoCreateSchema = false<br>org.jpox.validateTables = false<br>org.jpox.validateColumns = false<br>org.jpox.validateConstraints = false<br>org.jpox.storeManagerType = rdbms<br>org.jpox.autoCreateSchema = true<br>org.jpox.autoStartMechanismMode = checked<br>org.jpox.transactionIsolation = read_committed<br>javax.jdo.option.DetachAllOnCommit = true<br>javax.jdo.option.NontransactionalRead = true<br>javax.jdo.option.ConnectionDriverName = org.apache.derby.jdbc.ClientDriver<br>javax.jdo.option.ConnectionURL = jdbc:derby://hadoop1:1527/metastore_db;create = true<br>javax.jdo.option.ConnectionUserName = APP<br>javax.jdo.option.ConnectionPassword = mine<br><br># Setup Hive in HDFS<br>$HADOOP_HOME/bin/hadoop fs -mkdir /tmp <br>$HADOOP_HOME/bin/hadoop fs -mkdir /user/hive/warehouse<br>$HADOOP_HOME/bin/hadoop fs -chmod g+w /tmp <br>$HADOOP_HOME/bin/hadoop fs -chmod g+w /user/hive/warehouse<br><br>cd $HIVE_HOME<br>bin/schematool -initSchema -dbType derby<br>bin/hive<br><br># HIVE<br>cd course/softwares<br>wget https://apache.osuosl.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz<br>tar -xzf apache-hive-3.1.2-bin.tar.gz<br>mv apache-hive-3.1.2-bin hive<br><br>nano ~/.bashrc<br>export HIVE_HOME=$HOME/Desktop/trialrun/softwares/hive<br>export PATH=$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin<br>export CLASSPATH=$CLASSPATH:$HADOOP_HOME/lib/*:$HIVE_HOME/lib/*<br>source ~/.bashrc<br><br>cd $HIVE_HOME/conf<br>nano hive-env.sh<br>export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4<br><br># Metastore - Apache Derby configuration<br>cd course/softwares<br>wget http://archive.apache.org/dist/db/derby/db-derby-10.4.2.0/db-derby-10.4.2.0-bin.tar.gz<br>tar zxvf db-derby-10.4.2.0-bin.tar.gz<br>mv db-derby-10.4.2.0-bin derby<br><br>nano ~/.bashrc<br>export DERBY_HOME=$HOME/Desktop/trialrun/softwares/derby<br>export PATH=$PATH:$DERBY_HOME/bin<br>export CLASSPATH=$CLASSPATH:$DERBY_HOME/lib/derby.jar:$DERBY_HOME/lib/derbytools.jar<br>source ~/.bashrc<br><br>mkdir $DERBY_HOME/data<br><br># Configure Derby for Hive<br>cd $HIVE_HOME/conf<br>nano hive-site.xml<br><configuration><br><br>   <property><br>   	<name>javax.jdo.option.ConnectionURL</name><br>   	<value>jdbc:derby:;databaseName=metastore_db;create=true</value><br>    <description>JDBC connect string for a JDBC metastore </description><br>   </property><br>   <br></configuration><br><br>nano jpox.properties<br><br>javax.jdo.PersistenceManagerFactoryClass =<br><br>org.jpox.PersistenceManagerFactoryImpl<br>org.jpox.autoCreateSchema = false<br>org.jpox.validateTables = false<br>org.jpox.validateColumns = false<br>org.jpox.validateConstraints = false<br>org.jpox.storeManagerType = rdbms<br>org.jpox.autoCreateSchema = true<br>org.jpox.autoStartMechanismMode = checked<br>org.jpox.transactionIsolation = read_committed<br>javax.jdo.option.DetachAllOnCommit = true<br>javax.jdo.option.NontransactionalRead = true<br>javax.jdo.option.ConnectionDriverName = org.apache.derby.jdbc.ClientDriver<br>javax.jdo.option.ConnectionURL = jdbc:derby://hadoop1:1527/metastore_db;create = true<br>javax.jdo.option.ConnectionUserName = APP<br>javax.jdo.option.ConnectionPassword = mine<br><br># Setup Hive in HDFS<br>$HADOOP_HOME/bin/hadoop fs -mkdir /tmp <br>$HADOOP_HOME/bin/hadoop fs -mkdir /user/hive/warehouse<br>$HADOOP_HOME/bin/hadoop fs -chmod g+w /tmp <br>$HADOOP_HOME/bin/hadoop fs -chmod g+w /user/hive/warehouse<br><br>cd $HIVE_HOME<br>bin/schematool -initSchema -dbType derby<br>bin/hive<br><br>
+# HIVE
+cd course/softwares<br>
+wget https://apache.osuosl.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz<br>
+tar -xzf apache-hive-3.1.2-bin.tar.gz<br>
+mv apache-hive-3.1.2-bin hive<br>
+
+
+
+nano ~/.bashrc<br>
+export HIVE_HOME=$HOME/Desktop/trialrun/softwares/hive<br>
+export PATH=$PATH:$HIVE_HOME/sbin:$HIVE_HOME/bin<br>
+export CLASSPATH=$CLASSPATH:$HADOOP_HOME/lib/*:$HIVE_HOME/lib/*<br>
+source ~/.bashrc<br>
+
+cd $HIVE_HOME/conf<br>
+nano hive-env.sh<br>
+export HADOOP_HOME=$HOME/Desktop/trialrun/softwares/hadoop-3.3.4<br>
+
+#### Metastore - Apache Derby configuration<br>
+cd course/softwares<br>
+wget http://archive.apache.org/dist/db/derby/db-derby-10.4.2.0/db-derby-10.4.2.0-bin.tar.gz<br>
+tar zxvf db-derby-10.4.2.0-bin.tar.gz<br>
+mv db-derby-10.4.2.0-bin derby<br>
+
+nano ~/.bashrc<br>
+export DERBY_HOME=$HOME/Desktop/trialrun/softwares/derby<br>
+export PATH=$PATH:$DERBY_HOME/bin<br>
+export CLASSPATH=$CLASSPATH:$DERBY_HOME/lib/derby.jar:$DERBY_HOME/lib/derbytools.jar<br>
+source ~/.bashrc<br>
+
+mkdir $DERBY_HOME/data<br>
+
+#### Configure Derby for Hive<br>
+cd $HIVE_HOME/conf<br>
+nano hive-site.xml<br>
+<configuration>
+
+   <property>
+   	<name>javax.jdo.option.ConnectionURL</name>
+   	<value>jdbc:derby:;databaseName=metastore_db;create=true</value>
+    <description>JDBC connect string for a JDBC metastore </description>
+   </property>
+   
+</configuration>
+
+nano jpox.properties<br>
+
+javax.jdo.PersistenceManagerFactoryClass =
+
+org.jpox.PersistenceManagerFactoryImpl
+org.jpox.autoCreateSchema = false
+org.jpox.validateTables = false
+org.jpox.validateColumns = false
+org.jpox.validateConstraints = false
+org.jpox.storeManagerType = rdbms
+org.jpox.autoCreateSchema = true
+org.jpox.autoStartMechanismMode = checked
+org.jpox.transactionIsolation = read_committed
+javax.jdo.option.DetachAllOnCommit = true
+javax.jdo.option.NontransactionalRead = true
+javax.jdo.option.ConnectionDriverName = org.apache.derby.jdbc.ClientDriver
+javax.jdo.option.ConnectionURL = jdbc:derby://hadoop1:1527/metastore_db;create = true
+javax.jdo.option.ConnectionUserName = APP
+javax.jdo.option.ConnectionPassword = mine
+
+#### Setup Hive in HDFS<br>
+$HADOOP_HOME/bin/hadoop fs -mkdir /tmp <br>
+$HADOOP_HOME/bin/hadoop fs -mkdir /user/hive/warehouse<br>
+$HADOOP_HOME/bin/hadoop fs -chmod g+w /tmp <br>
+$HADOOP_HOME/bin/hadoop fs -chmod g+w /user/hive/warehouse<br>
+
+cd $HIVE_HOME<br>
+bin/schematool -initSchema -dbType derby<br>
+bin/hive<br>
+
+
