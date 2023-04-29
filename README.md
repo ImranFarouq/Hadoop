@@ -11,23 +11,23 @@ create table if not exists emp(empno int, ename string, sal float, comm float, d
 
 describe emp;<br>
 
-load data local inpath '/home/cloudera/Desktop/emp.csv' into table emp;<br>
+load data local inpath '/home/imran12/Desktop/hadoopdata/emp.csv' into table emp;<br>
 
 Select * from emp;<br>
 
 External Tables<br>
 
-create external table  ext_emp1(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ',’ location '/user/cloudera/data/emp’;
+create external table  emp_ext(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ',’ location '/user/imran21/data’;
 
 While giving path we have to give only directory path not file name<br>
 
 Here, table will be in given hdfs path.<br>
 
-create external table  ext_emp2(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ‘,’;
+create external table  emp_ext(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ‘,’;
 
 Table will be stored under /user/hive/warehouse/A.db/ext_emp2/emp<br>
 
-load data local inpath '/home/cloudera/Desktop/empdata' into table ext_emp2;<br>
+load data local inpath '/home/imran21/Desktop/hadoopdata/empdata' into table emp_ext;<br>
 
 set hive.exec.dynamic.partition.mode;<br>
 set hive.exec.dynamic.partition.mode=nonstrict;<br>
