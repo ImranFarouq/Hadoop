@@ -25,7 +25,7 @@ Here, table will be in given hdfs path.<br>
 
 create external table  emp_ext(empno int, ename string, sal float, comm float, dpno int) row format delimited fields terminated by ‘,’;
 
-Table will be stored under /user/hive/warehouse/A.db/ext_emp2/emp<br>
+Table will be stored under /user/hive/warehouse/bda.db/ext_emp2/emp<br>
 
 load data local inpath '/home/imran21/Desktop/hadoopdata/empdata' into table emp_ext;<br>
 
